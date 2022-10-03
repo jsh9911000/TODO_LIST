@@ -7,6 +7,6 @@
 <title>회원 정보 수정 페이지입니다.</title>
 </head>
 <body>
-
+	<h1>회원 정보 수정 페이지</h1>
 </body>
 </html>
