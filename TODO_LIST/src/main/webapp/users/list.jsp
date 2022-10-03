@@ -29,11 +29,9 @@
 			<c:otherwise>
 				<th>번호</th>
 				<th>이름</th>
-				<th>주소</th>
 				<c:forEach var="tmp" items="${list}">
 					<td>${tmp.num}</td>
 					<td>${tmp.users_name}</td>
-					<td>${tmp.users_addr}</td>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>

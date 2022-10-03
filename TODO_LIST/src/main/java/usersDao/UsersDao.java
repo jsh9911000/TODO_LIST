@@ -17,7 +17,7 @@ public class UsersDao {
 	 *  테이블마다 하나의 DAO 혹은 주제마다 하나의 DAO를 작성하게 된다.
 	 *  DAO를 만들기 위해서는 DTO를 미리 만들어야 한다.
 	 */
-	//1.모든 회원의 정보를 select해서 List<> type으로 return하는 메소드.
+	//1.회원 전체 조회 메소드.
 	public List<UsersDto> selectAll(){
 		//select해 올 데이터가 여러 개이기 때문에, ArrayList(배열) 객체를 생성해 놓는다.
 		List<UsersDto> list = new ArrayList<>();
@@ -31,7 +31,7 @@ public class UsersDao {
 		try {
 			conn = new DBconnection().getConn();	//DB 연결.
 			//sql.
-			String sql = "select num,users_name,users_addr"
+			String sql = "select num,users_name"
 					+ " from users"
 					+ " order by num asc";
 			ps = conn.prepareStatement(sql);	//sql 쿼리 저장해서 준비하기. => Exception 발생.
@@ -40,7 +40,6 @@ public class UsersDao {
 				UsersDto dto = new UsersDto();		//결과데이터를 dto에 저장한다.
 				dto.setNum(rs.getInt("num"));
 				dto.setUsers_name(rs.getString("users_name"));
-				dto.setUsers_addr(rs.getString("users_addr"));
 				list.add(dto);	//배열에 저장한다.
 			}
 		} catch (SQLException e) {
@@ -56,7 +55,7 @@ public class UsersDao {
 		}
 		return list;		//메소드를 호출하면 배열을 return한다.
 	}
-	//2.회원 1명의 데이터를 select하는 메소드.	=> 매개변수로 찾을 회원의 고유값을 전달해야 한다.
+	//2.회원 1명 조회하는 메소드.	=> 매개변수로 찾을 회원의 고유값을 전달해야 한다.
 	public UsersDto selectOne(int num) {
 		//회원 1명의 데이터를 저장할 DTO 생성.
 		UsersDto dto = null;
@@ -96,4 +95,82 @@ public class UsersDao {
 		}
 		return dto;	//회원 1명의 데이터가 들어있는 DTO를 return.
 	}
-}
+	//3.회원 가입 메소드.
+	public boolean insert(UsersDto dto) {
+		//DB 연결하는 Connection 객체 준비.
+		Connection conn = null;
+		//sql 쿼리를 저장하는 PreparedStatement 객체 준비.
+		PreparedStatement ps = null;
+		//DB에 정상적으로 저장되면 추가되는 row의 개수를 return 받는 flag 변수 준비.
+		int flag = 0;
+		try {
+		conn = new DBconnection().getConn();	//DB 연결.
+		//sql.
+		String sql = "insert into users"
+				+ " values(users_seq.NEXTVAL, ?, ?, ?, ?, ?, ?)";
+			ps = conn.prepareStatement(sql);	//sql 저장.
+			//?에 원하는 데이터 바인딩하기. => DB의 테이블명에 맞춰서 만들어야 한다.
+			ps.setString(1, dto.getUsers_id());
+			ps.setString(2, dto.getUsers_pwd());
+			ps.setString(3, dto.getUsers_name());
+			ps.setInt(4, dto.getUsers_age());
+			ps.setString(5, dto.getUsers_addr());
+			ps.setString(6, dto.getUsers_email());
+			//sql 쿼리 실행 후 반환되는 값 flag에 저장.
+			flag = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {	//준비된 객체들 닫기.
+			try {
+				if(conn != null ) { conn.close();}
+				if(ps != null ) { ps.close(); }
+			}catch(Exception e){
+				System.out.println("Exception 발생.");
+			}
+		}
+		if(flag > 0) {
+			return true;
+		}else {
+			return false;
+		}
+		}
+	//4.회원 조회 메소드. => 로그인을 위해서.
+	public boolean searchUsers(String id, String pwd) {
+		UsersDto dto = null;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int flag = 0;
+		try {
+			conn = new DBconnection().getConn();
+			String sql = "select users_name"
+					+ " from users"
+					+ " where users_id = ? and users_pwd = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			ps.setString(2, pwd);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				dto = new UsersDto();
+				dto.setUsers_name(rs.getString("users_name"));
+				flag++;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn != null) {conn.close();}
+				if(ps != null) {ps.close();}
+				if(rs != null) {rs.close();}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if(flag > 0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	}
+

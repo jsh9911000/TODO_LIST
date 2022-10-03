@@ -1,5 +1,6 @@
 package usersService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import usersDao.UsersDao;
@@ -23,5 +24,13 @@ public class UsersService {
 	//(2)회원 전체 조회 메소드.
 	public List<UsersDto> selectAll(){
 		return usersDao.selectAll();
+	}
+	//(3)회원 가입 메소드.
+	public boolean insert(UsersDto dto) {
+		return usersDao.insert(dto);
+	}
+	//(4)회원 조회 메소드. => 로그인에서 사용.
+	public boolean search(String id, String pwd) {
+		return usersDao.searchUsers(id, pwd);
 	}
 }
