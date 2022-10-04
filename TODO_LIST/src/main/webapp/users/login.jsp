@@ -34,7 +34,7 @@
 			<p>${id }님 반갑습니다.</p>
 		</c:when>
 		<c:otherwise>
-			<p>가입된 회원이 아닙니다.</p>
+			<p>가입된 회원이 아닙니다. 가입부터 하세요.</p>
 		</c:otherwise>
 	</c:choose>
 	<ul>
