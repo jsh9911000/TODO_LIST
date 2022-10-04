@@ -56,7 +56,7 @@ public class UsersDao {
 		return list;		//메소드를 호출하면 배열을 return한다.
 	}
 	//2.회원 1명 조회하는 메소드.	=> 매개변수로 찾을 회원의 고유값을 전달해야 한다.
-	public UsersDto selectOne(int num) {
+	public UsersDto selectOne(String id) {
 		//회원 1명의 데이터를 저장할 DTO 생성.
 		UsersDto dto = null;
 		//DB연결하는 Connection 객체 생성.
@@ -69,16 +69,16 @@ public class UsersDao {
 		try {
 			conn = new DBconnection().getConn();	//DB연결.
 			//sql문.	=> ? 는 찾을 회원의 정보를 바인딩.
-			String sql = "select users_name, users_addr, users_email"
+			String sql = "select users_name, users_age, users_addr, users_email, users_pwd"
 					+ " from users"
-					+ " where num = ?";
+					+ " where users_id = ?";
 			ps = conn.prepareStatement(sql); //sql문 저장.
-			ps.setInt(1, num);		//매개변수로 받은 회원의 고유값을 1번째 ?에 바인딩.
+			ps.setString(1, id);		//매개변수로 받은 회원의 고유값을 1번째 ?에 바인딩.
 			rs = ps.executeQuery();	//sql문 실행한 결과 데이터 저장하기.
 			if(rs.next()) {	//회원 1명의 데이터이기 때문에 반복문을 돌릴 필요가 없다.
 				dto = new UsersDto();	//DTO 객체 생성한 후 결과 데이터 저장.
-				dto.setNum(num);
 				dto.setUsers_name(rs.getString("users_name"));
+				dto.setUsers_age(rs.getInt("users_age"));
 				dto.setUsers_addr(rs.getString("users_addr"));
 				dto.setUsers_email(rs.getString("users_email"));
 			}
@@ -172,5 +172,70 @@ public class UsersDao {
 			return false;
 		}
 	}
+	//5.회원 탈퇴 메소드.
+	public boolean delete(String id) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		int flag = 0;
+		
+		try {
+			conn = new DBconnection().getConn();
+			String sql = "delete from users"
+					+ " where users_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			flag = ps.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn != null) {conn.close();}
+				if(ps != null) {ps.close();}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if(flag > 0) {
+			return true;
+		}else {
+			return false;
+		}
 	}
+	//6.회원 정보 수정 메소드.
+	public boolean update(UsersDto dto) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		int flag = 0;
+		
+		try {
+			conn = new DBconnection().getConn();
+			String sql = "update users"
+					+ " set users_pwd = ?, users_age = ?, users_addr = ?, users_email =?"
+					+ " where users_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, dto.getUsers_pwd());
+			ps.setInt(2, dto.getUsers_age());
+			ps.setString(3, dto.getUsers_addr());
+			ps.setString(4, dto.getUsers_email());
+			ps.setString(5, dto.getUsers_id());
+			flag = ps.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn != null) {conn.close();}
+				if(ps != null) {ps.close();}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if(flag > 0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	}
+
 

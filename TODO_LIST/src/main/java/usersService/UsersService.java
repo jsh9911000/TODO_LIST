@@ -18,8 +18,8 @@ public class UsersService {
 	
 	//메소드.
 	//(1)회원 한명 조회 메소드.
-	public UsersDto selectOne(int num) {
-		return usersDao.selectOne(num);
+	public UsersDto selectOne(String id) {
+		return usersDao.selectOne(id);
 	}
 	//(2)회원 전체 조회 메소드.
 	public List<UsersDto> selectAll(){
@@ -32,5 +32,13 @@ public class UsersService {
 	//(4)회원 조회 메소드. => 로그인에서 사용.
 	public boolean search(String id, String pwd) {
 		return usersDao.searchUsers(id, pwd);
+	}
+	//(5)회원 탈퇴 메소드.
+	public boolean delete(String id) {
+		return usersDao.delete(id);
+	}
+	//(6)회원 정보 수정 메소드.
+	public boolean update(UsersDto dto) {
+		return usersDao.update(dto);
 	}
 }

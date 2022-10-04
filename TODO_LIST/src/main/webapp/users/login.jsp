@@ -17,6 +17,10 @@
 	
 	request.setAttribute("id", id);
 	request.setAttribute("isExist", isExist);
+	
+	if(isExist == true){
+		session.setAttribute("id", id);
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -35,8 +39,13 @@
 	</c:choose>
 	<ul>
 		<li><a href="<%= request.getContextPath() %>">홈으로</a></li>
-		<li><a href="updateForm.jsp">회원 정보 수정</a></li>
-		<li><a href="deleteForm.jsp">회원 탈퇴 페이지</a></li>
+		<c:choose>
+			<c:when test="${isExist == true}">
+				<li><a href="logout.jsp">로그아웃</a></li>
+				<li><a href="updateForm.jsp">회원 정보 수정</a></li>
+				<li><a href="deleteForm.jsp">회원 탈퇴 페이지</a></li>
+			</c:when>
+		</c:choose>
 	</ul>
 </body>
 </html>

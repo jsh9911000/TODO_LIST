@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<%
+	String id = (String)session.getAttribute("id");
+%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -26,9 +29,19 @@
 	#menu{
 		list-style: none;
 	}
+	#userID{
+		color: tomato;
+	}
 </style>
 </head>
 <body>
+	<header>
+		<nav class="info">
+			<ul>
+				<li id="userID"><a href="users/info.jsp">${id}</a></li>
+			</ul>
+		</nav>
+	</header>
 	<div class="container">
 		<h1 id="main">Welcome to TODO-LIST</h1>
 		<ul id="menu">
