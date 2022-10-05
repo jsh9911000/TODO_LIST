@@ -11,7 +11,7 @@
 <title>메인 페이지</title>
 <style>
 	body{
-		background-color: black;	
+		background-color: white;	
 	}
 	.container{
 		width: 30%;
@@ -46,6 +46,7 @@
 		<h1 id="main">Welcome to TODO-LIST</h1>
 		<ul id="menu">
 			<li><a href="<%= request.getContextPath()%>/users/index.jsp" style="text-decoration: none;">MemberShip</a></li>
+			<li><a href="<%= request.getContextPath()%>/todo/index.jsp" style="text-decoration:none;">Todo</a></li>
 		</ul>
 	</div>
 </body>
