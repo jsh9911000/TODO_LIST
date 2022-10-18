@@ -10,7 +10,7 @@ create sequence users_seq;
 /*
  * todo table.
  */
-create table todo(num number primary key, userID varchar2(50) not null, userName varchar2(50) not null, 
-todoTitle varchar2(50) not null, todoContent varchar2(100) not null, todoDate DATE);
+create table todo(num number primary key, userID varchar2(50) not null, todoTitle varchar2(50) not null, 
+todoContent varchar2(50) not null, regdate DATE);
 
 create sequence todo_seq;

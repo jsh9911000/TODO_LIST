@@ -44,6 +44,8 @@
 				<li><a href="logout.jsp">로그아웃</a></li>
 				<li><a href="updateForm.jsp">회원 정보 수정</a></li>
 				<li><a href="deleteForm.jsp">회원 탈퇴 페이지</a></li>
+				<li><a href="<%= request.getContextPath() %>/todo/list.jsp">할 일 전체 목록</a></li>
+				<li><a href="<%= request.getContextPath() %>/todo/insertForm.jsp">할 일 추가하기</a></li>
 			</c:when>
 		</c:choose>
 	</ul>

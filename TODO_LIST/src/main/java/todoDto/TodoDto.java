@@ -3,18 +3,16 @@ package todoDto;
 public class TodoDto {
 	private int num;
 	private String userID;
-	private String userName;
 	private String todoTitle;
 	private String todoContent;
 	private String todoDate;
 	
 	public TodoDto() {}
 
-	public TodoDto(int num, String userID, String userName, String todoTitle, String todoContent, String todoDate) {
+	public TodoDto(int num, String userID, String todoTitle, String todoContent, String todoDate) {
 		super();
 		this.num = num;
 		this.userID = userID;
-		this.userName = userName;
 		this.todoTitle = todoTitle;
 		this.todoContent = todoContent;
 		this.todoDate = todoDate;
@@ -34,14 +32,6 @@ public class TodoDto {
 
 	public void setUserID(String userID) {
 		this.userID = userID;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 
 	public String getTodoTitle() {
@@ -67,6 +57,6 @@ public class TodoDto {
 	public void setTodoDate(String todoDate) {
 		this.todoDate = todoDate;
 	}
-	
-	
+
+
 }
