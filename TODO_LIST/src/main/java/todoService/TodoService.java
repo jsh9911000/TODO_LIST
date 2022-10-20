@@ -29,7 +29,7 @@ public class TodoService {
 	public boolean delete(int num) {
 		return todoDao.delete(num);
 	};
-	//할 일 조회하는 메소드.
+	//할 일 조회하는 메소드(1).
 	public List<TodoDto> selectOne(String id){
 		return todoDao.selectOne(id);
 	}

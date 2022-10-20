@@ -124,14 +124,13 @@ public class TodoDao {
 		try {
 			conn = new DBconnection().getConn();
 			String sql = "update todo"
-					+ " todoTitle = ?, todoContent = ?, regdate =?"
+					+ " set todoTitle = ?, todoContent = ?, regdate =?"
 					+ " where num = ?";
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, dto.getUserID());
-			ps.setString(2, dto.getTodoTitle());
-			ps.setString(3, dto.getTodoContent());
-			ps.setString(4, dto.getTodoDate());
-			ps.setInt(5, dto.getNum());
+			ps.setString(1, dto.getTodoTitle());
+			ps.setString(2, dto.getTodoContent());
+			ps.setString(3, dto.getTodoDate());
+			ps.setInt(4, dto.getNum());
 			flag = ps.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
