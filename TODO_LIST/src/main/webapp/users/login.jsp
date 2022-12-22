@@ -19,7 +19,7 @@
 	request.setAttribute("isExist", isExist);
 	
 	if(isExist == true){
-		session.setAttribute("id", id);
+		session.setAttribute("id", id);	//html 및 JS에서 id를 사용하려면 반드시 해야 한다.
 	}
 %>
 <!DOCTYPE html>
