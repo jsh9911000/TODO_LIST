@@ -24,7 +24,7 @@
 	
 	boolean isSuccess = ts.insert(dto);
 	
-	request.setAttribute("dto", dto);
+	request.setAttribute("dto", dto); //html 및 JS에서 dto를 사용하려면 반드시 해야 한다.
 %>
 <!DOCTYPE html>
 <html>
