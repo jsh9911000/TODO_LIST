@@ -23,7 +23,7 @@
 	<h3>멤버 목록 페이지</h3>
 	<table border="1">
 		<c:choose>
-			<c:when test="list.size() == 0">
+			<c:when test="${list.size() == 0}">
 				<td>회원 목록이 없습니다.</td>
 			</c:when>
 			<c:otherwise>
